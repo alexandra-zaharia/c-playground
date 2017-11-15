@@ -23,5 +23,5 @@ int main() {
         display_result(init_temp, temp_scale, conv_temp, conv_scale);
     }
 
-    return EXIT_SUCCESS;
+    return EXIT_FAILURE;  /* should never be reached */
 }
