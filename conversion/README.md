@@ -6,7 +6,7 @@ A simple conversion utility allowing the user to convert from/to Kelvin, Celsius
 
 ## Motivation
 
-* Separating temperature conversion logic and I/O operations.
+* Separating temperature conversion logic from I/O operations.
 * Making sure there are no loopholes in the program flow.
 * Soft spots: `do ... while` and `?:` (ab)use.
 
