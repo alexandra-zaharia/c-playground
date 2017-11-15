@@ -81,10 +81,9 @@ void connect_output(char *filename, configuration *config) {
  *
  * Output file: /path/to/input.txt.out
  *
- * Three input files are provided in data/, as follows:
+ * Two input files are provided in data/, as follows:
  *     - test_case_small.txt  contains      10 sites
  *     - test_case_medium.txt contains     625 sites
- *     - test_case_large.txt  contains 1000000 sites 
  */
 int main(int argc, char **argv) {
     char *filename_out = NULL;                     /* Name of the output file */
