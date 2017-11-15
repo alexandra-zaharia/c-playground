@@ -6,9 +6,9 @@ A simple conversion utility allowing the user to convert from/to Kelvin, Celsius
 
 ## Motivation
 
-* Putting temperature conversion logic aside from I/O operations.
+* Separating temperature conversion logic and I/O operations.
 * Making sure there are no loopholes in the program flow.
-* Soft spots: `do ... while` and `?:` (ab)use
+* Soft spots: `do ... while` and `?:` (ab)use.
 
 ## Compiling
 
@@ -44,4 +44,5 @@ Choose temperature scale to convert from (0 to quit): 0
 
 ## TODO
 
-Missing comments
+* `scanf` is _assumed_ to read integers
+* Missing comments
