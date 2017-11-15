@@ -18,16 +18,15 @@ gcc -Wall -Wextra -o uf_client uf_client.c uf.c
 
 ## Test cases
 
-Three test cases are provided in [`data/`](https://github.com/alexandra-zaharia/c-playground/blob/master/union_find/data):
+Two test cases are provided in [`data/`](https://github.com/alexandra-zaharia/c-playground/blob/master/union_find/data):
 
 * `test_case_small.txt` contains 10 sites;
-* `test_case_medium.txt` contains 625 sites;
-* `test_case_large.txt` contains 1 million sites.
+* `test_case_medium.txt` contains 625 sites.
 
 ## Running the union-find client
 
 ``` 
-$ ./uf_client data/test_case_large.txt
+$ ./uf_client data/test_case_small.txt
 ```
 
-Creates an output file at `data/test_case_large.txt` with sites, parents and weights. 
+Creates an output file at `data/test_case_small.txt` with sites, parents and weights. 
