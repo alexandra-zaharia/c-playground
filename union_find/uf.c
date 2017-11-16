@@ -1,4 +1,5 @@
 #include "uf.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 /* Creates, initializes and returns an initial configuration containing n sites
@@ -6,10 +7,28 @@
  * site is 1. */
 configuration *initialize_configuration(int n) {
     configuration *config = (configuration *)malloc(sizeof(configuration));
+    if (config == NULL) {
+        fprintf(stderr, "%s: malloc error (config).\n", __func__);
+        return NULL;
+    }
 
     config->sites = n;
+    
     config->parent = (int *)malloc(n * sizeof(int));
+    if (config->parent == NULL) {
+        fprintf(stderr, "%s: malloc error (parent).\n", __func__);
+        free(config);
+        return NULL;
+    }
+
     config->weight = (int *)malloc(n * sizeof(int));
+    if (config->weight == NULL) {
+        fprintf(stderr, "%s: malloc error (weight).\n", __func__);
+        free(config->parent);
+        free(config);
+        return NULL;
+    }
+
     reset_configuration(config);
 
     return config;

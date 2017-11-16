@@ -23,11 +23,17 @@ configuration* connect_input(char *filename) {
     /* Read the number of sites in the configuration. */
     if (fscanf(file_in, "%d", &n) != 1) {
         fprintf(stderr, "Unexpected input.\n");
+        fclose(file_in);
         exit(EXIT_FAILURE);
     }
 
     /* Initialize the configuration. */
     config = initialize_configuration(n);
+    if (config == NULL) {
+        fprintf(stderr, "Configuration initialization failure. Aborting.\n");
+        fclose(file_in);
+        exit(EXIT_FAILURE);
+    }
 
     /* Connect the sites according to the values in the input file. */
     while (fscanf(file_in, "%d %d", &p, &q) == 2)
@@ -54,6 +60,7 @@ void connect_output(char *filename, configuration *config) {
     if (file_out == NULL) {
         fprintf(stderr, "Cannot open '%s' for writing.\n", filename);
         free(filename);
+        free_config(config);
         exit(EXIT_FAILURE);
     }
 
