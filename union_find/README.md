@@ -29,4 +29,4 @@ Two test cases are provided in [`data/`](https://github.com/alexandra-zaharia/c-
 $ ./uf_client data/test_case_small.txt
 ```
 
-Creates an output file at `data/test_case_small.txt` with sites, parents and weights. 
+Creates an output file at `data/test_case_small.txt.out` with the sites from the input file, their parents and respective weights. 
