@@ -50,8 +50,8 @@ configuration* connect_input(char *filename) {
 /* For every site i in the configuration 'config', outputs to the output file
  * denoted by the string 'filename': the site i, the parent of site i, and the
  * weight of site i. The three values need to be on a single line and space-
- * separated. */
-void connect_output(char *filename, configuration *config) {
+ * separated. Returns 0 on success and -1 on failure. */
+int connect_output(char *filename, configuration *config) {
     FILE *file_out;
     int i;
 
@@ -59,9 +59,7 @@ void connect_output(char *filename, configuration *config) {
     file_out = fopen(filename, "w");
     if (file_out == NULL) {
         fprintf(stderr, "Cannot open '%s' for writing.\n", filename);
-        free(filename);
-        free_config(config);
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     /* Print every site in order, its root and its weight to the output file,
@@ -75,6 +73,8 @@ void connect_output(char *filename, configuration *config) {
 
     /* Close the output file. */
     fclose(file_out);
+
+    return 0;
 }
 
 /*
@@ -95,6 +95,7 @@ void connect_output(char *filename, configuration *config) {
 int main(int argc, char **argv) {
     char *filename_out = NULL;                     /* Name of the output file */
     configuration *config;
+    int output_status;
 
     if (argc != 2) {
         fprintf(stderr, "Expected 1 argument.\n");
@@ -113,11 +114,11 @@ int main(int argc, char **argv) {
 
     /* Output every site in order, along with its root and weight, one line per
      * site. */
-    connect_output(filename_out, config);
+    output_status = connect_output(filename_out, config);
 
     /* Free allocated memory. */
     free(filename_out);
     free_config(config);
     
-    return EXIT_SUCCESS;
+    return output_status == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 }
