@@ -17,8 +17,8 @@ typedef struct {
 
 typedef struct {
     union {
-		Point2D point;
-		Segment segment;
+        Point2D point;
+        Segment segment;
     };
     bool is_segment;
 } Projection;
