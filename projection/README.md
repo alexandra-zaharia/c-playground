@@ -1,5 +1,9 @@
 # Segment projection using `union`s
 
+## Update
+
+For an improved version using **anonymous unions**, see [anonymous\_union](https://github.com/alexandra-zaharia/c-playground/tree/master/anonymous_union).
+
 ## About
 
 Example of `union` usage in C that does not involve anything low-level. Check out this [article](https://sites.google.com/view/alexandra-zaharia/blog/unions-in-c) for a detailed explanation.
