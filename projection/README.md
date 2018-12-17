@@ -2,7 +2,7 @@
 
 ## Update
 
-For an improved version using **anonymous unions**, see [anonymous\_union](https://github.com/alexandra-zaharia/c-playground/tree/master/anonymous_union).
+For an improved version using C11 **anonymous unions**, see [anonymous\_union](https://github.com/alexandra-zaharia/c-playground/tree/master/anonymous_union).
 
 ## About
 

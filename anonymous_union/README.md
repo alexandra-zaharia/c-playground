@@ -2,7 +2,7 @@
 
 ## About
 
-Example of `union` usage in C that does not involve anything low-level. Check out this [article](https://sites.google.com/view/alexandra-zaharia/blog/unions-in-c) for a detailed explanation. This is an improved version of the [projection example](https://github.com/alexandra-zaharia/c-playground/tree/master/projection) that uses an **anonymous union**.
+Example of `union` usage in C that does not involve anything low-level. Check out this [article](https://sites.google.com/view/alexandra-zaharia/blog/unions-in-c) for a detailed explanation. This is an improved version of the [projection example](https://github.com/alexandra-zaharia/c-playground/tree/master/projection) that uses an **anonymous union** (introduced in the C11 standard).
 
 As its name implies, an _anonymous union_ is an unnamed member of another structure. Therefore, instead of writing:
 
@@ -37,7 +37,7 @@ and access the `segment` in the union as `projection.segment` in a `struct Proje
   * Needed an example involving `union` that was both visual and easy to grasp.
   * This example involves the notion of _segment projection_. A segment is defined by its two endpoints and can be projected on either the horizontal (X) axis or the vertical (Y) axis. The projection of a segment is:
     * A point if a vertical segment is projected on the horizontal axis;
-    * A point if a horizontal segment is projected on the vertical axis, e.g. the blue segment defined by endpoints (1, 2) and (2, 2) in the figure;
+    * A point if a horizontal segment is projected on the vertical axis, e.g. the blue segment defined by endpoints (1, 2) and (2, 2) in the figure below;
     * A segment in any other case.
     
 ![The projections on the X and Y axes are a segment and a point, respectively.](https://github.com/alexandra-zaharia/c-playground/blob/master/anonymous_union/blue_segment.png)
