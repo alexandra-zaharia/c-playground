@@ -8,13 +8,13 @@ As its name implies, an _anonymous union_ is an unnamed member of another struct
 
 ```c
 union SegmentProjection {
-	Point2D point;
-	Segment segment;
+    Point2D point;
+    Segment segment;
 };
 
 struct Projection {
-	union SegmentProjection proj;
-	bool is_segment;
+    union SegmentProjection proj;
+    bool is_segment;
 }; 
 ```
 
@@ -22,11 +22,11 @@ and accessing the `segment` in the union as `projection.proj.segment` in a `stru
 
 ```c
 struct Projection {
-	union {
-		Point2D point;
-		Segment segment;
-	};
-	bool is_segment;
+    union {
+	Point2D point;
+	Segment segment;
+    };
+    bool is_segment;
 };
 ```
 
@@ -39,6 +39,8 @@ and access the `segment` in the union as `projection.segment` in a `struct Proje
     * A point if a vertical segment is projected on the horizontal axis;
     * A point if a horizontal segment is projected on the vertical axis, e.g. the blue segment defined by endpoints (1, 2) and (2, 2) in the figure;
     * A segment in any other case.
+    
+![The projections on the X and Y axes are a segment and a point, respectively.](https://github.com/alexandra-zaharia/c-playground/blob/master/anonymous_union/blue_segment.png)
 
 ## Compiling
 
