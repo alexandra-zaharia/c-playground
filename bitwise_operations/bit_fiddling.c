@@ -35,3 +35,30 @@ int invert_last_n_bits(int number, int n_bits)
 
     return mask ^ number;
 }
+
+
+// Returns the number of "on" bits in the input `number`.
+unsigned int number_of_on_bits(int number)
+{
+    unsigned int n_bits_on = 0;
+
+    int value = number;
+
+    for (size_t i = 0; i < CHAR_BIT * sizeof(int); i++) {
+        if ((1 & value) == 1)
+            ++n_bits_on;
+        value >>= 1;
+    }
+
+    return n_bits_on;
+}
+
+
+/*
+ * Returns 1 if the bit in `number` at position `bit_pos` is 1, or 0 otherwise. Bit positions start
+ * at 0.
+ */
+int check_bit(int number, int bit_pos)
+{
+    return (number & (1 << bit_pos)) != 0;
+}

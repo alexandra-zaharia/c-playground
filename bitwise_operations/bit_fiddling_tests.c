@@ -9,6 +9,7 @@
 #include <cmocka.h>
 
 #include <limits.h>
+#include <stdio.h>
 #include "bit_fiddling.h"
 
 
@@ -95,6 +96,69 @@ static void test_invert_last_8_bits_minus_2()
 }
 
 
+static void test_count_bits_on_7()
+{
+    assert_true(number_of_on_bits(7) == 3);
+}
+
+
+static void test_count_bits_on_2019()
+{
+    assert_true(number_of_on_bits(2019) == 8);
+}
+
+
+static void test_count_bits_on_minus_1()
+{
+    assert_true(number_of_on_bits(-1) == CHAR_BIT * sizeof(int));
+}
+
+
+static void test_count_bits_on_minus_2()
+{
+    assert_true(number_of_on_bits(-2) == CHAR_BIT * sizeof(int) - 1);
+}
+
+
+static void test_check_bits_7()
+{
+    for (int i = 0; i < 8; i++) {
+        if (i < 3)
+            assert_int_equal(check_bit(7, i), 1);
+        else
+            assert_int_equal(check_bit(7, i), 0);
+    }
+}
+
+
+static void test_check_bits_2019()
+{
+    for (int i = 0; i < 16; i++) {
+        if (i < 2 || (5 <= i && i <= 10))
+            assert_int_equal(check_bit(2019, i), 1);
+        else
+            assert_int_equal(check_bit(2019, i), 0);
+    }
+}
+
+
+static void test_check_bits_minus_1()
+{
+    for (int i = 0; i < (int) (CHAR_BIT * sizeof(int)); i++) {
+        assert_int_equal(check_bit(-1, i), 1);
+    }
+}
+
+
+static void test_check_bits_minus_2()
+{
+    assert_int_equal(check_bit(-2, 0), 0);
+    for (int i = 1; i < (int) (CHAR_BIT * sizeof(int)); i++) {
+        assert_int_equal(check_bit(-2, i), 1);
+    }
+}
+
+
 int main() {
     const struct CMUnitTest tests_conversion[] = {
             cmocka_unit_test(test_convert_int_to_binary_string_7),
@@ -114,8 +178,31 @@ int main() {
             cmocka_unit_test(test_invert_last_8_bits_minus_2)
     };
 
+    const struct CMUnitTest tests_count_bits_on[] = {
+            cmocka_unit_test(test_count_bits_on_7),
+            cmocka_unit_test(test_count_bits_on_2019),
+            cmocka_unit_test(test_count_bits_on_minus_1),
+            cmocka_unit_test(test_count_bits_on_minus_2),
+    };
+
+    const struct CMUnitTest tests_check_bit[] = {
+            cmocka_unit_test(test_check_bits_7),
+            cmocka_unit_test(test_check_bits_2019),
+            cmocka_unit_test(test_check_bits_minus_1),
+            cmocka_unit_test(test_check_bits_minus_2)
+    };
+
+    printf("Testing int conversion into binary string\n");
     int status_i2b = cmocka_run_group_tests(tests_conversion, NULL, NULL);
+
+    printf("\nTesting inversion of last n bits\n");
     int status_inv = cmocka_run_group_tests(tests_inversion, NULL, NULL);
 
-    return status_i2b && status_inv;
+    printf("\nTesting count of bits set to on\n");
+    int status_con = cmocka_run_group_tests(tests_count_bits_on, NULL, NULL);
+
+    printf("\nTesting bit checking\n");
+    int status_chk = cmocka_run_group_tests(tests_check_bit, NULL, NULL);
+
+    return status_i2b && status_inv && status_con && status_chk;
 }
