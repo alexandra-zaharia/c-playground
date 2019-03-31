@@ -25,15 +25,16 @@ char *int_to_binary_string(int number, char *binary_string)
 // Inverts the last `n_bits` in `number` and returns the resulting number.
 int invert_last_n_bits(int number, int n_bits)
 {
-    int mask = 0;
-    int bit_value = 1;
-
-    for (int i = 0; i < n_bits; i++) { // Build the mask: 1...1, with `n_bits` 1s
-        mask |= bit_value;
-        bit_value <<= 1;
-    }
-
-    return mask ^ number;
+    /*
+     * We need a mask 0...01...1, with `n_bits` 1s. We left-shift 1 by `n_bits` positions and obtain
+     * 0...010...0, where 1 is at position `n_bits` + 1. When we subtract 1 from 1 << n_bits, we get
+     * a mask with 0s at the most significant positions and 1s for the `n_bits` least significant
+     * positions.
+     *
+     * Finally, this mask is XOR-ed with the number, yielding the original number with the `n_bits`
+     * least significant bits inverted.
+     */
+    return ((1 << n_bits) - 1) ^ number;
 }
 
 
@@ -60,5 +61,10 @@ unsigned int number_of_on_bits(int number)
  */
 int check_bit(int number, int bit_pos)
 {
+    /*
+     * We need a mask 0...010...0, where 1 is at position `bit_pos`. We obtain this mask by left-
+     * shifting 1 by `bit_pos` positions. Then this mask is applied with the AND operator to the
+     * number, which allows to determine whether the bit at position `bit_pos` is set.
+     */
     return (number & (1 << bit_pos)) != 0;
 }
