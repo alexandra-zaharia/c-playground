@@ -159,6 +159,57 @@ static void test_get_bits_minus_2()
 }
 
 
+static void test_clear_most_significant_bits_7()
+{
+    assert_int_equal(clear_most_significant_bits_up_to_position(7, 3), 7);
+    assert_int_equal(clear_most_significant_bits_up_to_position(7, 2), 3);
+    assert_int_equal(clear_most_significant_bits_up_to_position(7, 1), 1);
+    assert_int_equal(clear_most_significant_bits_up_to_position(7, 0), 0);
+}
+
+
+static void test_clear_most_significant_bits_2019()
+{
+    assert_int_equal(clear_most_significant_bits_up_to_position(2019, 10), 995);
+    assert_int_equal(clear_most_significant_bits_up_to_position(2019, 9), 483);
+    assert_int_equal(clear_most_significant_bits_up_to_position(2019, 8), 227);
+    assert_int_equal(clear_most_significant_bits_up_to_position(2019, 7), 99);
+    assert_int_equal(clear_most_significant_bits_up_to_position(2019, 6), 35);
+    assert_int_equal(clear_most_significant_bits_up_to_position(2019, 5), 3);
+    assert_int_equal(clear_most_significant_bits_up_to_position(2019, 4), 3);
+    assert_int_equal(clear_most_significant_bits_up_to_position(2019, 3), 3);
+    assert_int_equal(clear_most_significant_bits_up_to_position(2019, 2), 3);
+    assert_int_equal(clear_most_significant_bits_up_to_position(2019, 1), 1);
+    assert_int_equal(clear_most_significant_bits_up_to_position(2019, 0), 0);
+}
+
+
+static void test_clear_most_significant_bits_minus_1()
+{
+    assert_int_equal(clear_most_significant_bits_up_to_position(-1, 7), 127);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-1, 6), 63);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-1, 5), 31);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-1, 4), 15);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-1, 3), 7);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-1, 2), 3);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-1, 1), 1);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-1, 0), 0);
+}
+
+
+static void test_clear_most_significant_bits_minus_2()
+{
+    assert_int_equal(clear_most_significant_bits_up_to_position(-2, 7), 126);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-2, 6), 62);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-2, 5), 30);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-2, 4), 14);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-2, 3), 6);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-2, 2), 2);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-2, 1), 0);
+    assert_int_equal(clear_most_significant_bits_up_to_position(-2, 0), 0);
+}
+
+
 int main() {
     const struct CMUnitTest tests_conversion[] = {
             cmocka_unit_test(test_convert_int_to_binary_string_7),
@@ -192,6 +243,13 @@ int main() {
             cmocka_unit_test(test_get_bits_minus_2)
     };
 
+    const struct CMUnitTest tests_clear_most_significant_bits[] = {
+            cmocka_unit_test(test_clear_most_significant_bits_7),
+            cmocka_unit_test(test_clear_most_significant_bits_2019),
+            cmocka_unit_test(test_clear_most_significant_bits_minus_1),
+            cmocka_unit_test(test_clear_most_significant_bits_minus_2)
+    };
+
     printf("Testing int conversion into binary string\n");
     int status_i2b = cmocka_run_group_tests(tests_conversion, NULL, NULL);
 
@@ -204,5 +262,8 @@ int main() {
     printf("\nTesting bit checking\n");
     int status_get = cmocka_run_group_tests(tests_get_bit, NULL, NULL);
 
-    return status_i2b && status_inv && status_set && status_get;
+    printf("\nTesting clearing most significant bits up to a given position\n");
+    int status_clr_msig = cmocka_run_group_tests(tests_clear_most_significant_bits, NULL, NULL);
+
+    return status_i2b && status_inv && status_set && status_get && status_clr_msig;
 }

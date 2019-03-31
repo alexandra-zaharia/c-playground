@@ -10,4 +10,6 @@ int invert_last_n_bits(int number, int n_bits);
 unsigned int number_of_bits_set(int number);
 int get_bit(int number, int bit_pos);
 
+int clear_most_significant_bits_up_to_position(int number, int bit_pos);
+
 #endif //C_PLAYGROUND_BIT_FIDDLING_H

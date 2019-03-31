@@ -65,3 +65,10 @@ int get_bit(int number, int bit_pos)
      */
     return (number & (1 << bit_pos)) != 0;
 }
+
+
+// Clears the most significant bits in `number` up to the bit at position `bit_pos` (inclusive).
+int clear_most_significant_bits_up_to_position(int number, int bit_pos)
+{
+    return number & ((1 << bit_pos) - 1);
+}
