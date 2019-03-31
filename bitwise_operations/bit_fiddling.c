@@ -38,8 +38,8 @@ int invert_last_n_bits(int number, int n_bits)
 }
 
 
-// Returns the number of "on" bits in the input `number`.
-unsigned int number_of_on_bits(int number)
+// Returns the number of "on" bits (bits set to 1) in the input `number`.
+unsigned int number_of_bits_set(int number)
 {
     unsigned int n_bits_on = 0;
 

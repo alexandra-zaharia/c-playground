@@ -96,27 +96,27 @@ static void test_invert_last_8_bits_minus_2()
 }
 
 
-static void test_count_bits_on_7()
+static void test_count_bits_set_7()
 {
-    assert_true(number_of_on_bits(7) == 3);
+    assert_true(number_of_bits_set(7) == 3);
 }
 
 
-static void test_count_bits_on_2019()
+static void test_count_bits_set_2019()
 {
-    assert_true(number_of_on_bits(2019) == 8);
+    assert_true(number_of_bits_set(2019) == 8);
 }
 
 
-static void test_count_bits_on_minus_1()
+static void test_count_bits_set_minus_1()
 {
-    assert_true(number_of_on_bits(-1) == CHAR_BIT * sizeof(int));
+    assert_true(number_of_bits_set(-1) == CHAR_BIT * sizeof(int));
 }
 
 
-static void test_count_bits_on_minus_2()
+static void test_count_bits_set_minus_2()
 {
-    assert_true(number_of_on_bits(-2) == CHAR_BIT * sizeof(int) - 1);
+    assert_true(number_of_bits_set(-2) == CHAR_BIT * sizeof(int) - 1);
 }
 
 
@@ -178,11 +178,11 @@ int main() {
             cmocka_unit_test(test_invert_last_8_bits_minus_2)
     };
 
-    const struct CMUnitTest tests_count_bits_on[] = {
-            cmocka_unit_test(test_count_bits_on_7),
-            cmocka_unit_test(test_count_bits_on_2019),
-            cmocka_unit_test(test_count_bits_on_minus_1),
-            cmocka_unit_test(test_count_bits_on_minus_2),
+    const struct CMUnitTest tests_count_bits_set[] = {
+            cmocka_unit_test(test_count_bits_set_7),
+            cmocka_unit_test(test_count_bits_set_2019),
+            cmocka_unit_test(test_count_bits_set_minus_1),
+            cmocka_unit_test(test_count_bits_set_minus_2),
     };
 
     const struct CMUnitTest tests_get_bit[] = {
@@ -199,10 +199,10 @@ int main() {
     int status_inv = cmocka_run_group_tests(tests_inversion, NULL, NULL);
 
     printf("\nTesting count of bits set to on\n");
-    int status_con = cmocka_run_group_tests(tests_count_bits_on, NULL, NULL);
+    int status_set = cmocka_run_group_tests(tests_count_bits_set, NULL, NULL);
 
     printf("\nTesting bit checking\n");
     int status_get = cmocka_run_group_tests(tests_get_bit, NULL, NULL);
 
-    return status_i2b && status_inv && status_con && status_get;
+    return status_i2b && status_inv && status_set && status_get;
 }
