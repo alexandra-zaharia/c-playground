@@ -120,41 +120,41 @@ static void test_count_bits_on_minus_2()
 }
 
 
-static void test_check_bits_7()
+static void test_get_bits_7()
 {
     for (int i = 0; i < 8; i++) {
         if (i < 3)
-            assert_int_equal(check_bit(7, i), 1);
+            assert_int_equal(get_bit(7, i), 1);
         else
-            assert_int_equal(check_bit(7, i), 0);
+            assert_int_equal(get_bit(7, i), 0);
     }
 }
 
 
-static void test_check_bits_2019()
+static void test_get_bits_2019()
 {
     for (int i = 0; i < 16; i++) {
         if (i < 2 || (5 <= i && i <= 10))
-            assert_int_equal(check_bit(2019, i), 1);
+            assert_int_equal(get_bit(2019, i), 1);
         else
-            assert_int_equal(check_bit(2019, i), 0);
+            assert_int_equal(get_bit(2019, i), 0);
     }
 }
 
 
-static void test_check_bits_minus_1()
+static void test_get_bits_minus_1()
 {
     for (int i = 0; i < (int) (CHAR_BIT * sizeof(int)); i++) {
-        assert_int_equal(check_bit(-1, i), 1);
+        assert_int_equal(get_bit(-1, i), 1);
     }
 }
 
 
-static void test_check_bits_minus_2()
+static void test_get_bits_minus_2()
 {
-    assert_int_equal(check_bit(-2, 0), 0);
+    assert_int_equal(get_bit(-2, 0), 0);
     for (int i = 1; i < (int) (CHAR_BIT * sizeof(int)); i++) {
-        assert_int_equal(check_bit(-2, i), 1);
+        assert_int_equal(get_bit(-2, i), 1);
     }
 }
 
@@ -185,11 +185,11 @@ int main() {
             cmocka_unit_test(test_count_bits_on_minus_2),
     };
 
-    const struct CMUnitTest tests_check_bit[] = {
-            cmocka_unit_test(test_check_bits_7),
-            cmocka_unit_test(test_check_bits_2019),
-            cmocka_unit_test(test_check_bits_minus_1),
-            cmocka_unit_test(test_check_bits_minus_2)
+    const struct CMUnitTest tests_get_bit[] = {
+            cmocka_unit_test(test_get_bits_7),
+            cmocka_unit_test(test_get_bits_2019),
+            cmocka_unit_test(test_get_bits_minus_1),
+            cmocka_unit_test(test_get_bits_minus_2)
     };
 
     printf("Testing int conversion into binary string\n");
@@ -202,7 +202,7 @@ int main() {
     int status_con = cmocka_run_group_tests(tests_count_bits_on, NULL, NULL);
 
     printf("\nTesting bit checking\n");
-    int status_chk = cmocka_run_group_tests(tests_check_bit, NULL, NULL);
+    int status_get = cmocka_run_group_tests(tests_get_bit, NULL, NULL);
 
-    return status_i2b && status_inv && status_con && status_chk;
+    return status_i2b && status_inv && status_con && status_get;
 }

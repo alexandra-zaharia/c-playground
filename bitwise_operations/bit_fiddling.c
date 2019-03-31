@@ -55,11 +55,8 @@ unsigned int number_of_on_bits(int number)
 }
 
 
-/*
- * Returns 1 if the bit in `number` at position `bit_pos` is 1, or 0 otherwise. Bit positions start
- * at 0.
- */
-int check_bit(int number, int bit_pos)
+// Returns the value of the bit at position `bit_pos` in `number`. Bit positions start at 0.
+int get_bit(int number, int bit_pos)
 {
     /*
      * We need a mask 0...010...0, where 1 is at position `bit_pos`. We obtain this mask by left-
