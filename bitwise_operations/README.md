@@ -27,7 +27,7 @@ Getting comfortable with:
 
 * `unsigned int rotate_left(unsigned int number, unsigned int positions)` -- **rotates the specified `number` to the left for a given number of `positions`**; overflowing bits (with respect to the number of bits multiple of 8 that the `number` needs for its representation) are placed in the least significant positions of the resulting number
 
-* `int insert_number(int n, int m, int i, int j)` -- inserts number `m` into number `n`, from bit positions `j` through `i` (inclusive); it is assumed that the `m` fits between bits `j` and `i`
+* `int insert_number(int n, int m, int i, int j)` -- inserts number `m` into number `n`, from bit positions `j` through `i` (inclusive); it is assumed that `m` fits between bits `j` and `i`
 
 * `bool is_power_of_two(int number)` -- determines whether the specified `number` is a **power of 2**
 
