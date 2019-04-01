@@ -60,7 +60,7 @@ int get_bit(int number, int bit_pos)
 {
     /*
      * We need a mask 0...010...0, where 1 is at position `bit_pos`. We obtain this mask by left-
-     * shifting 1 by `bit_pos` positions. Then this mask is applied with the AND operator to the
+     * shifting 1 by `bit_pos` positions. This mask is then applied using the AND operator to the
      * number, which allows to determine whether the bit at position `bit_pos` is set.
      */
     return (number & (1 << bit_pos)) != 0;
@@ -71,4 +71,20 @@ int get_bit(int number, int bit_pos)
 int clear_most_significant_bits_up_to_position(int number, int bit_pos)
 {
     return number & ((1 << bit_pos) - 1);
+}
+
+
+// Clears the least significant bits in `number`, starting from the bit at position `bit_pos`.
+int clear_least_significant_bits_from_position(int number, int bit_pos)
+{
+    /*
+     * We need a mask 1...10...0 where the 0s go from `bit_pos` to 0. This mask is then applied
+     * using the AND operator to the number, which allows to clear all bits starting from `bit_pos`
+     * up to the least significant bit.
+     *
+     * In order to obtain the mask, we will negate a mask 0...01...1 where the 1s go from `bit_pos`
+     * to 0. Such a mask can be obtained by left-shifting 1 by `bit_pos` + 1 positions, then
+     * subtracting 1 from the mask.
+     */
+    return number & ~((1 << (bit_pos + 1)) - 1);
 }

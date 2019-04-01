@@ -210,6 +210,63 @@ static void test_clear_most_significant_bits_minus_2()
 }
 
 
+static void test_clear_least_significant_bits_7()
+{
+    // 7: 0000 0111
+    assert_int_equal(clear_least_significant_bits_from_position(7, 3), 0);
+    assert_int_equal(clear_least_significant_bits_from_position(7, 2), 0);
+    assert_int_equal(clear_least_significant_bits_from_position(7, 1), 4);
+    assert_int_equal(clear_least_significant_bits_from_position(7, 0), 6);
+}
+
+
+static void test_clear_least_significant_bits_2019()
+{
+    // 2019: 0000 0111 1110 0011
+    for (int i = 15; i >= 10; i--)
+        assert_int_equal(clear_least_significant_bits_from_position(2019, i), 0);
+
+    assert_int_equal(clear_least_significant_bits_from_position(2019, 9), 1024);
+    assert_int_equal(clear_least_significant_bits_from_position(2019, 8), 1536);
+    assert_int_equal(clear_least_significant_bits_from_position(2019, 7), 1792);
+    assert_int_equal(clear_least_significant_bits_from_position(2019, 6), 1920);
+    assert_int_equal(clear_least_significant_bits_from_position(2019, 5), 1984);
+
+    for (int i = 4; i >= 1; i--)
+        assert_int_equal(clear_least_significant_bits_from_position(2019, i), 2016);
+
+    assert_int_equal(clear_least_significant_bits_from_position(2019, 0), 2018);
+}
+
+
+static void test_clear_least_significant_bits_minus_1()
+{
+    // -1: 1111 1111
+    assert_int_equal(clear_least_significant_bits_from_position(-1, 7), -256);
+    assert_int_equal(clear_least_significant_bits_from_position(-1, 6), -128);
+    assert_int_equal(clear_least_significant_bits_from_position(-1, 5), -64);
+    assert_int_equal(clear_least_significant_bits_from_position(-1, 4), -32);
+    assert_int_equal(clear_least_significant_bits_from_position(-1, 3), -16);
+    assert_int_equal(clear_least_significant_bits_from_position(-1, 2), -8);
+    assert_int_equal(clear_least_significant_bits_from_position(-1, 1), -4);
+    assert_int_equal(clear_least_significant_bits_from_position(-1, 0), -2);
+}
+
+
+static void test_clear_least_significant_bits_minus_2()
+{
+    // -2: 1111 1110
+    assert_int_equal(clear_least_significant_bits_from_position(-2, 7), -256);
+    assert_int_equal(clear_least_significant_bits_from_position(-2, 6), -128);
+    assert_int_equal(clear_least_significant_bits_from_position(-2, 5), -64);
+    assert_int_equal(clear_least_significant_bits_from_position(-2, 4), -32);
+    assert_int_equal(clear_least_significant_bits_from_position(-2, 3), -16);
+    assert_int_equal(clear_least_significant_bits_from_position(-2, 2), -8);
+    assert_int_equal(clear_least_significant_bits_from_position(-2, 1), -4);
+    assert_int_equal(clear_least_significant_bits_from_position(-2, 0), -2);
+}
+
+
 int main() {
     const struct CMUnitTest tests_conversion[] = {
             cmocka_unit_test(test_convert_int_to_binary_string_7),
@@ -250,6 +307,13 @@ int main() {
             cmocka_unit_test(test_clear_most_significant_bits_minus_2)
     };
 
+    const struct CMUnitTest tests_clear_least_significant_bits[] = {
+            cmocka_unit_test(test_clear_least_significant_bits_7),
+            cmocka_unit_test(test_clear_least_significant_bits_2019),
+            cmocka_unit_test(test_clear_least_significant_bits_minus_1),
+            cmocka_unit_test(test_clear_least_significant_bits_minus_2)
+    };
+
     printf("Testing int conversion into binary string\n");
     int status_i2b = cmocka_run_group_tests(tests_conversion, NULL, NULL);
 
@@ -265,5 +329,9 @@ int main() {
     printf("\nTesting clearing most significant bits up to a given position\n");
     int status_clr_msig = cmocka_run_group_tests(tests_clear_most_significant_bits, NULL, NULL);
 
-    return status_i2b && status_inv && status_set && status_get && status_clr_msig;
+    printf("\nTesting clearing least significant bits from a given position through 0\n");
+    int status_clr_lsig = cmocka_run_group_tests(tests_clear_least_significant_bits, NULL, NULL);
+
+    return status_i2b && status_inv && status_set && status_get && status_clr_msig
+        && status_clr_lsig;
 }

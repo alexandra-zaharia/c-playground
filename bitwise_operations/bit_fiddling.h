@@ -11,5 +11,6 @@ unsigned int number_of_bits_set(int number);
 int get_bit(int number, int bit_pos);
 
 int clear_most_significant_bits_up_to_position(int number, int bit_pos);
+int clear_least_significant_bits_from_position(int number, int bit_pos);
 
 #endif //C_PLAYGROUND_BIT_FIDDLING_H
