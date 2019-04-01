@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <string.h>
+#include <math.h>
 #include "bit_fiddling.h"
 
 
@@ -34,7 +35,7 @@ int invert_last_n_bits(int number, int n_bits)
      * Finally, this mask is XOR-ed with the number, yielding the original number with the `n_bits`
      * least significant bits inverted.
      */
-    return ((1 << n_bits) - 1) ^ number;
+    return number ^ ((1 << n_bits) - 1);
 }
 
 
@@ -87,4 +88,38 @@ int clear_least_significant_bits_from_position(int number, int bit_pos)
      * subtracting 1 from the mask.
      */
     return number & ~((1 << (bit_pos + 1)) - 1);
+}
+
+
+/*
+ * Rotates the given `number` to the left by a given number of `positions`. The overflowing bits
+ * (the most significant bit positions in `number`) are rotated to the right (to the least
+ * significant bit positions in the new number). Rotation happens on 1, 2, 3, 4, etc. bytes,
+ * depending on how many bytes `number` needs for its representation.
+ */
+unsigned int rotate_left(unsigned int number, unsigned int positions) {
+    unsigned int precision = 0; // number of bits multiple of CHAR_BIT needed to represent `number`
+    unsigned int number_of_bytes = 1; // number of bytes needed to represent `number`
+
+    while (!precision) {
+        if (number < pow(2, CHAR_BIT * number_of_bytes))
+            precision = CHAR_BIT * number_of_bytes;
+        ++number_of_bytes;
+    }
+
+    /*
+     * Overflowing bits are the most significant ones. Shift them to the right by precision -
+     * positions bits.
+     */
+    unsigned int overflow = number >> (precision - positions);
+
+    /*
+     * Return the number left-shifted by `positions` bits, with bits more significant than
+     * `precision` zeroed out if the `precision` is less than the number of bits needed for an
+     * unsigned int, and with overflowing bits at the least significant positions.
+     */
+    unsigned int left_shifted = number << positions;
+    if (precision < CHAR_BIT * sizeof(unsigned int))
+        left_shifted &= (unsigned int) ((1 << precision) - 1);
+    return left_shifted | overflow;
 }

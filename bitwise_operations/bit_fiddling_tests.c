@@ -267,6 +267,42 @@ static void test_clear_least_significant_bits_minus_2()
 }
 
 
+static void test_rotate_left_1_byte()
+{
+    assert_int_equal(rotate_left(100, 3), 35);  // rotL(011 00100, 3) => 00100 011
+    assert_int_equal(rotate_left(116, 3), 163); // rotL(011 10100, 3) => 10100 011
+    assert_int_equal(rotate_left(244, 3), 167); // rotL(111 10100, 3) => 10100 111
+}
+
+
+static void test_rotate_left_2_bytes()
+{
+    // rotL(0110 111100001010, 4) => 111100001010 0110
+    assert_int_equal(rotate_left(28426, 4), 61606);
+
+    // rotL(0000000101 100100, 10) => (100100 0000000101)
+    assert_int_equal(rotate_left(356, 10), 36869);
+}
+
+
+static void test_rotate_left_3_bytes()
+{
+    if (sizeof(unsigned int) == 2) return;
+
+    // rotL(00001111 0000000101100100, 8) => 0000000101100100 00001111
+    assert_int_equal(rotate_left(983396, 8), 91151);
+}
+
+
+static void test_rotate_left_4_bytes()
+{
+    if (sizeof(unsigned int) == 2) return;
+
+    // rotL(11001 100000000010110010000001111, 5) => 100000000010110010000001111 11001
+    assert_true(rotate_left(3422643215, 5) == 2150400505);
+}
+
+
 int main() {
     const struct CMUnitTest tests_conversion[] = {
             cmocka_unit_test(test_convert_int_to_binary_string_7),
@@ -314,6 +350,13 @@ int main() {
             cmocka_unit_test(test_clear_least_significant_bits_minus_2)
     };
 
+    const struct CMUnitTest tests_rotate_left[] = {
+            cmocka_unit_test(test_rotate_left_1_byte),
+            cmocka_unit_test(test_rotate_left_2_bytes),
+            cmocka_unit_test(test_rotate_left_3_bytes),
+            cmocka_unit_test(test_rotate_left_4_bytes)
+    };
+
     printf("Testing int conversion into binary string\n");
     int status_i2b = cmocka_run_group_tests(tests_conversion, NULL, NULL);
 
@@ -332,6 +375,9 @@ int main() {
     printf("\nTesting clearing least significant bits from a given position through 0\n");
     int status_clr_lsig = cmocka_run_group_tests(tests_clear_least_significant_bits, NULL, NULL);
 
+    printf("\nTesting rotating a number to the left by a specified number of positions\n");
+    int status_rot_l = cmocka_run_group_tests(tests_rotate_left, NULL, NULL);
+
     return status_i2b && status_inv && status_set && status_get && status_clr_msig
-        && status_clr_lsig;
+        && status_clr_lsig && status_rot_l;
 }
