@@ -583,5 +583,4 @@ int main()
 
     return status_i2b || status_inv || status_set || status_get || status_clr_msig
         || status_clr_lsig || status_rot_l || status_ins || status_pow2 || status_flip;
-
 }
