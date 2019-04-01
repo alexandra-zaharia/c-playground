@@ -303,7 +303,126 @@ static void test_rotate_left_4_bytes()
 }
 
 
-int main() {
+static void test_insert_number_1024_19()
+{
+    // n = 1024    : 100 00000000
+    // m =   19    :      10011
+    // i = 2, j = 6: 100 01001100 = 1100
+    assert_int_equal(insert_number(1024, 19, 2, 6), 1100);
+}
+
+static void test_insert_number_127_4()
+{
+    // n = 127     : 1111111
+    // m = 4       :     100
+    // i = 3, j = 5: 1100111 = 103
+    assert_int_equal(insert_number(127, 4, 3, 5), 103);
+}
+
+
+static void test_power_of_two_true()
+{
+    assert_true(is_power_of_two(1));
+    assert_true(is_power_of_two(2));
+    assert_true(is_power_of_two(4));
+    assert_true(is_power_of_two(8));
+    assert_true(is_power_of_two(16));
+    assert_true(is_power_of_two(32));
+    assert_true(is_power_of_two(64));
+    assert_true(is_power_of_two(128));
+    assert_true(is_power_of_two(256));
+    assert_true(is_power_of_two(512));
+    assert_true(is_power_of_two(1024));
+}
+
+
+static void test_power_of_two_false()
+{
+    assert_false(is_power_of_two(0));
+    assert_false(is_power_of_two(3));
+    assert_false(is_power_of_two(7));
+    assert_false(is_power_of_two(9));
+    assert_false(is_power_of_two(15));
+    assert_false(is_power_of_two(127));
+    assert_false(is_power_of_two(129));
+    assert_false(is_power_of_two(130));
+    assert_false(is_power_of_two(-1));
+    assert_false(is_power_of_two(-2));
+}
+
+
+static void test_flip_bit_to_win_1775()
+{
+    // 1775: 110*11101111*
+    assert_int_equal(flip_bit_to_win(1775), 8);
+}
+
+
+static void test_flip_bit_to_win_1774()
+{
+    // 1774: 110*1110111*0
+    assert_int_equal(flip_bit_to_win(1774), 7);
+}
+
+
+static void test_flip_bit_to_win_9967()
+{
+    // 9967: 100110*11101111*
+    assert_int_equal(flip_bit_to_win(9967), 8);
+}
+
+
+static void test_flip_bit_to_win_52975()
+{
+    // 52975: 11001110*11101111*
+    assert_int_equal(flip_bit_to_win(52975), 8);
+}
+
+
+static void test_flip_bit_to_win_0()
+{
+    assert_int_equal(flip_bit_to_win(0), 1);
+}
+
+
+static void test_flip_bit_to_win_1()
+{
+    assert_int_equal(flip_bit_to_win(1), 2);
+}
+
+
+static void test_flip_bit_to_win_2()
+{
+    assert_int_equal(flip_bit_to_win(2), 2);
+}
+
+
+static void test_flip_bit_to_win_30()
+{
+    assert_int_equal(flip_bit_to_win(30), 5);
+}
+
+
+static void test_flip_bit_to_win_31()
+{
+    assert_int_equal(flip_bit_to_win(31), 6);
+}
+
+
+static void test_flip_bit_to_win_minus_1()
+{
+    assert_int_equal(flip_bit_to_win(-1), CHAR_BIT * sizeof(int));
+}
+
+
+static void test_flip_bit_to_win_minus_2()
+{
+    assert_int_equal(flip_bit_to_win(-2), CHAR_BIT * sizeof(int));
+}
+
+
+int run_tests_conversion()
+{
     const struct CMUnitTest tests_conversion[] = {
             cmocka_unit_test(test_convert_int_to_binary_string_7),
             cmocka_unit_test(test_convert_int_to_binary_string_2019),
@@ -311,6 +430,13 @@ int main() {
             cmocka_unit_test(test_convert_int_to_binary_string_minus_2)
     };
 
+    printf("Testing int conversion into binary string\n");
+    return cmocka_run_group_tests(tests_conversion, NULL, NULL);
+}
+
+
+int run_tests_inversion()
+{
     const struct CMUnitTest tests_inversion[] = {
             cmocka_unit_test(test_invert_last_4_bits_7),
             cmocka_unit_test(test_invert_last_8_bits_7),
@@ -322,6 +448,13 @@ int main() {
             cmocka_unit_test(test_invert_last_8_bits_minus_2)
     };
 
+    printf("\nTesting inversion of last n bits\n");
+    return cmocka_run_group_tests(tests_inversion, NULL, NULL);
+}
+
+
+int run_tests_count_bits_set()
+{
     const struct CMUnitTest tests_count_bits_set[] = {
             cmocka_unit_test(test_count_bits_set_7),
             cmocka_unit_test(test_count_bits_set_2019),
@@ -329,6 +462,13 @@ int main() {
             cmocka_unit_test(test_count_bits_set_minus_2),
     };
 
+    printf("\nTesting count of bits set to on\n");
+    return cmocka_run_group_tests(tests_count_bits_set, NULL, NULL);
+}
+
+
+int run_tests_get_bit()
+{
     const struct CMUnitTest tests_get_bit[] = {
             cmocka_unit_test(test_get_bits_7),
             cmocka_unit_test(test_get_bits_2019),
@@ -336,6 +476,13 @@ int main() {
             cmocka_unit_test(test_get_bits_minus_2)
     };
 
+    printf("\nTesting bit checking\n");
+    return cmocka_run_group_tests(tests_get_bit, NULL, NULL);
+}
+
+
+int run_tests_clear_most_significant_bits()
+{
     const struct CMUnitTest tests_clear_most_significant_bits[] = {
             cmocka_unit_test(test_clear_most_significant_bits_7),
             cmocka_unit_test(test_clear_most_significant_bits_2019),
@@ -343,6 +490,13 @@ int main() {
             cmocka_unit_test(test_clear_most_significant_bits_minus_2)
     };
 
+    printf("\nTesting clearing most significant bits up to a given position\n");
+    return cmocka_run_group_tests(tests_clear_most_significant_bits, NULL, NULL);
+}
+
+
+int run_tests_clear_least_significant_bits()
+{
     const struct CMUnitTest tests_clear_least_significant_bits[] = {
             cmocka_unit_test(test_clear_least_significant_bits_7),
             cmocka_unit_test(test_clear_least_significant_bits_2019),
@@ -350,6 +504,13 @@ int main() {
             cmocka_unit_test(test_clear_least_significant_bits_minus_2)
     };
 
+    printf("\nTesting clearing least significant bits from a given position through 0\n");
+    return cmocka_run_group_tests(tests_clear_least_significant_bits, NULL, NULL);
+}
+
+
+int run_tests_rotate_left()
+{
     const struct CMUnitTest tests_rotate_left[] = {
             cmocka_unit_test(test_rotate_left_1_byte),
             cmocka_unit_test(test_rotate_left_2_bytes),
@@ -357,27 +518,70 @@ int main() {
             cmocka_unit_test(test_rotate_left_4_bytes)
     };
 
-    printf("Testing int conversion into binary string\n");
-    int status_i2b = cmocka_run_group_tests(tests_conversion, NULL, NULL);
-
-    printf("\nTesting inversion of last n bits\n");
-    int status_inv = cmocka_run_group_tests(tests_inversion, NULL, NULL);
-
-    printf("\nTesting count of bits set to on\n");
-    int status_set = cmocka_run_group_tests(tests_count_bits_set, NULL, NULL);
-
-    printf("\nTesting bit checking\n");
-    int status_get = cmocka_run_group_tests(tests_get_bit, NULL, NULL);
-
-    printf("\nTesting clearing most significant bits up to a given position\n");
-    int status_clr_msig = cmocka_run_group_tests(tests_clear_most_significant_bits, NULL, NULL);
-
-    printf("\nTesting clearing least significant bits from a given position through 0\n");
-    int status_clr_lsig = cmocka_run_group_tests(tests_clear_least_significant_bits, NULL, NULL);
-
     printf("\nTesting rotating a number to the left by a specified number of positions\n");
-    int status_rot_l = cmocka_run_group_tests(tests_rotate_left, NULL, NULL);
+    return cmocka_run_group_tests(tests_rotate_left, NULL, NULL);
+}
 
-    return status_i2b && status_inv && status_set && status_get && status_clr_msig
-        && status_clr_lsig && status_rot_l;
+
+int run_tests_insert_number()
+{
+    const struct CMUnitTest tests_insert_number[] = {
+            cmocka_unit_test(test_insert_number_1024_19),
+            cmocka_unit_test(test_insert_number_127_4)
+    };
+
+    printf("\nTesting insertion of a number into another number between specified positions\n");
+    return cmocka_run_group_tests(tests_insert_number, NULL, NULL);
+}
+
+
+int run_tests_power_of_two()
+{
+    const struct CMUnitTest tests_power_of_two[] = {
+            cmocka_unit_test(test_power_of_two_true),
+            cmocka_unit_test(test_power_of_two_false)
+    };
+
+    printf("\nTesting check for power of two\n");
+    return cmocka_run_group_tests(tests_power_of_two, NULL, NULL);
+}
+
+
+int run_tests_flip_bit_to_win()
+{
+    const struct CMUnitTest tests_flip_bit_to_win[] = {
+            cmocka_unit_test(test_flip_bit_to_win_1775),
+            cmocka_unit_test(test_flip_bit_to_win_1774),
+            cmocka_unit_test(test_flip_bit_to_win_9967),
+            cmocka_unit_test(test_flip_bit_to_win_52975),
+            cmocka_unit_test(test_flip_bit_to_win_0),
+            cmocka_unit_test(test_flip_bit_to_win_1),
+            cmocka_unit_test(test_flip_bit_to_win_2),
+            cmocka_unit_test(test_flip_bit_to_win_30),
+            cmocka_unit_test(test_flip_bit_to_win_31),
+            cmocka_unit_test(test_flip_bit_to_win_minus_1),
+            cmocka_unit_test(test_flip_bit_to_win_minus_2)
+    };
+
+    printf("\nTesting flip_bit_to_win()\n");
+    return cmocka_run_group_tests(tests_flip_bit_to_win, NULL, NULL);
+}
+
+
+int main()
+{
+    int status_i2b = run_tests_conversion();
+    int status_inv = run_tests_inversion();
+    int status_set = run_tests_count_bits_set();
+    int status_get = run_tests_get_bit();
+    int status_clr_msig = run_tests_clear_most_significant_bits();
+    int status_clr_lsig = run_tests_clear_least_significant_bits();
+    int status_rot_l = run_tests_rotate_left();
+    int status_ins = run_tests_insert_number();
+    int status_pow2 = run_tests_power_of_two();
+    int status_flip = run_tests_flip_bit_to_win();
+
+    return status_i2b || status_inv || status_set || status_get || status_clr_msig
+        || status_clr_lsig || status_rot_l || status_ins || status_pow2 || status_flip;
+
 }

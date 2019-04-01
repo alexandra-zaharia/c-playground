@@ -9,6 +9,8 @@
 #include <math.h>
 #include "bit_fiddling.h"
 
+#define MAX(a, b)  (a) < (b) ? (b) : (a)
+
 
 // Returns the bit string (textual) representation of the input number.
 char *int_to_binary_string(int number, char *binary_string)
@@ -122,4 +124,81 @@ unsigned int rotate_left(unsigned int number, unsigned int positions) {
     if (precision < CHAR_BIT * sizeof(unsigned int))
         left_shifted &= (unsigned int) ((1 << precision) - 1);
     return left_shifted | overflow;
+}
+
+
+/*
+ * Inserts the number m into the number n, from bit positions j through i. Assumes there is enough
+ * space between positions j and i to insert m.
+ */
+int insert_number(int n, int m, int i, int j)
+{
+    /*
+     * Create a mask that zeroes out bits from positions j through i (inclusive) in n when using the
+     * AND operator between n and the mask. The mask has the following form:
+     *      Mask:        1   ...  1   0   ...   0   1   ...   1
+     *      Positions: |n|-1     j+1  j         i  i-1        0
+     */
+    int mask = ~((1 << (j + 1)) - 1) | ((1 << i) - 1);
+
+    /*
+     * We apply the mask to n to turn off bits between positions j and i, then we turn on the bits
+     * between j and i that are turned on in m.
+     */
+    return (n & mask) | (m << i);
+}
+
+
+// Determines whether the specified number is a power of two.
+bool is_power_of_two(int number)
+{
+    if (number == 0) return false;
+    /*
+     * A number is a power of two if it only has one of its bits set to 1. In this case, if we
+     * subtract 1 from the number, we get a sequence of 1s starting from the next most significant
+     * bit with respect to the bit that is set. If we AND the number and this sequence of 1s
+     * together,
+     */
+    return (number & (number - 1)) == 0;
+}
+
+
+/*
+ * Returns the length of the longest sequence of 1s that can be obtained from the given number by
+ * flipping exactly one bit from 0 to 1.
+ */
+int flip_bit_to_win(int number)
+{
+    int seq_lengths[CHAR_BIT * sizeof(int)];  // will store lengths of sequences of 0s and 1s
+    int seq_counter = 0;                      // number of sequences in `seq_lengths` + 1
+    int current_value = 0;                    // current bit value (0 or 1)
+
+    for (size_t i = 0; i < CHAR_BIT * sizeof(int); i++)   // all sequence lengths are initially 0
+        seq_lengths[i] = 0;
+
+    for (size_t i = 0; i < CHAR_BIT * sizeof(int); i++) {
+        if ((number & 1) == current_value) {  // still in the same sequence as before
+           seq_lengths[seq_counter]++;
+        } else {                              // reading a different sequence than before
+            seq_lengths[++seq_counter] = 1;
+            current_value = number & 1;
+        }
+        number >>= 1;                         // move on to the next bit
+    }
+
+    if (seq_counter == 0) return 1;
+    if (seq_counter == 1) return seq_lengths[0] > 0 ? seq_lengths[1] + 1 : seq_lengths[1];
+    if (seq_counter == 2) return seq_lengths[2] > 0 ? seq_lengths[1] + 1 : seq_lengths[1];
+
+    int max_len = 0;
+
+    for (int i = 1; i < seq_counter - 1; i += 2) {
+        int current_max = seq_lengths[i + 1] == 1         // if there is one 0 between two sequences
+                ? seq_lengths[i] + 1 + seq_lengths[i + 2] // of ones, we can flip the 0 bit
+                : MAX(seq_lengths[i], seq_lengths[i + 2]) + 1; // longest sequence of 1s + 1
+        if (max_len < current_max)
+            max_len = current_max;
+    }
+
+    return max_len;
 }
