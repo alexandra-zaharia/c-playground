@@ -157,7 +157,9 @@ bool is_power_of_two(int number)
      * A number is a power of two if it only has one of its bits set to 1. In this case, if we
      * subtract 1 from the number, we get a sequence of 1s starting from the next most significant
      * bit with respect to the bit that is set. If we AND the number and this sequence of 1s
-     * together,
+     * together, we get 0. For a number that is not a power of two, applying the AND operator to the
+     * number and the number from which we subtract 1 will always result in a value different from
+     * zero.
      */
     return (number & (number - 1)) == 0;
 }
