@@ -19,14 +19,14 @@ A compare function for sorting in ascending order that compares two `const void`
 Comparison functions have been implemented in the file [`cmp.c`](https://github.com/alexandra-zaharia/c-playground/blob/master/sorting_algorithms/cmp.c) in both ascending and descending order for:
 * integers
 * strings
-* a used-defined data structure `Point` with two integer members `x` and `y`
+* a data structure `Point` with two integer members `x` and `y` (defined in [`cmp.h`](https://github.com/alexandra-zaharia/c-playground/blob/master/sorting_algorithms/cmp.h))
 
 ## Included algorithms
 
 Let us assume there are *N* items in the array. The included algorithms are:
 * **Selection sort** -- naïve algorithm where the smallest item in the array is placed in the first position, then the next smallest item is placed in the second position, and so on, until the whole array is sorted.
-  * Time complexity: *O(N<sup>2</sup>)* (uses ~*N<sup>2</sup>/2 compares, performs *N* exchanges)
-  * Space complexity: *O(1)* auxiliary space
+  * Time complexity: *O*(*N*<sup>2</sup>) (uses ~*N*<sup>2</sup>/2 compares, performs *N* exchanges)
+  * Space complexity: *O*(1) auxiliary space
   * Not stable (meaning the order of equal values is not preserved)
 
 ## Compiling
