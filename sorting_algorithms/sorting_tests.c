@@ -96,15 +96,28 @@ void test_integer_sort()
     selection_sort(arr_int, SIZE, sizeof(int), compare_int_asc);
     printf("Selection sort: ");
     print_array_int(arr_int, SIZE);
+
+    init_array_int(arr_int);
+    bubble_sort(arr_int, SIZE, sizeof(int), compare_int_asc);
+    printf("Bubble sort:    ");
+    print_array_int(arr_int, SIZE);
+
     printf("---\n");
 
     printf("Sorting integers in descending order:\n");
     init_array_int(arr_int);
     printf("Initial array:  ");
     print_array_int(arr_int, SIZE);
+
     selection_sort(arr_int, SIZE, sizeof(int), compare_int_desc);
     printf("Selection sort: ");
     print_array_int(arr_int, SIZE);
+
+    init_array_int(arr_int);
+    bubble_sort(arr_int, SIZE, sizeof(int), compare_int_desc);
+    printf("Bubble sort:    ");
+    print_array_int(arr_int, SIZE);
+
     printf("=====================================================================================\n");
 
     free(arr_int);
@@ -126,8 +139,14 @@ void test_string_sort()
     init_array_str(arr_str);
     printf("Initial array:  ");
     print_array_str(arr_str, SIZE);
+
     selection_sort(arr_str, SIZE, sizeof(char *), compare_str_asc);
     printf("Selection sort: ");
+    print_array_str(arr_str, SIZE);
+
+    init_array_str(arr_str);
+    bubble_sort(arr_str, SIZE, sizeof(char *), compare_str_asc);
+    printf("Bubble sort:    ");
     print_array_str(arr_str, SIZE);
     printf("---\n");
 
@@ -135,9 +154,16 @@ void test_string_sort()
     init_array_str(arr_str);
     printf("Initial array:  ");
     print_array_str(arr_str, SIZE);
+
     selection_sort(arr_str, SIZE, sizeof(char *), compare_str_desc);
     printf("Selection sort: ");
     print_array_str(arr_str, SIZE);
+
+    init_array_str(arr_str);
+    bubble_sort(arr_str, SIZE, sizeof(char *), compare_str_desc);
+    printf("Bubble sort:    ");
+    print_array_str(arr_str, SIZE);
+
     printf("=====================================================================================\n");
 
     for (size_t i = 0; i < SIZE; i++)
@@ -161,18 +187,32 @@ void test_struct_sort()
     init_array_struct(arr_struct);
     printf("Initial array:  ");
     print_array_struct(arr_struct, SIZE);
+
     selection_sort(arr_struct, SIZE, sizeof(Point *), compare_struct_asc);
     printf("Selection sort: ");
     print_array_struct(arr_struct, SIZE);
+
+    init_array_struct(arr_struct);
+    bubble_sort(arr_struct, SIZE, sizeof(Point *), compare_struct_asc);
+    printf("Bubble sort:    ");
+    print_array_struct(arr_struct, SIZE);
+
     printf("---\n");
 
     printf("Sorting Point structs in descending order:\n");
     init_array_struct(arr_struct);
     printf("Initial array:  ");
     print_array_struct(arr_struct, SIZE);
+
     selection_sort(arr_struct, SIZE, sizeof(Point *), compare_struct_desc);
     printf("Selection sort: ");
     print_array_struct(arr_struct, SIZE);
+
+    init_array_struct(arr_struct);
+    bubble_sort(arr_struct, SIZE, sizeof(Point *), compare_struct_desc);
+    printf("Bubble sort:    ");
+    print_array_struct(arr_struct, SIZE);
+
     printf("=====================================================================================\n");
 
     for (size_t i = 0; i < SIZE; i++)

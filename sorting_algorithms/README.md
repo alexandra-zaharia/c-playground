@@ -28,6 +28,10 @@ Let us assume there are *N* items in the array. The included algorithms are:
   * Time complexity: *O*(*N*<sup>2</sup>) (uses ~*N*<sup>2</sup>/2 compares, performs *N* exchanges)
   * Space complexity: *O*(1) auxiliary space
   * Not stable (meaning the order of equal values is not preserved)
+* **Bubble sort** -- naïve algorithm where consecutive items are compared and swapped if they are in the wrong order; this process is repeated until no swap is performed for a whole pass.
+  * Time complexity: *O*(*N*<sup>2</sup>) comparisons and swaps in the average and worst-case scenario; *O*(*N*) comparisons and *O*(1) swaps in the best-case scenario, i.e. when the array is already sorted
+  * Space complexity: *O*(1) auxiliary space
+  * Stable (meaning the order of equal values is preserved)
 
 ## Compiling
 
@@ -42,3 +46,11 @@ Run the executable:
 ```
 ./sorting_tests
 ```
+
+## TODO
+
+Add full suite of tests using cmocka (integer, strings, custom data structure) for the following cases and for every implemented algorithm, using the ascending and descending compare functions:
+* random order
+* nearly sorted
+* reversed order
+* few unique values
