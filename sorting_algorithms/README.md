@@ -25,13 +25,22 @@ Comparison functions have been implemented in the file [`cmp.c`](https://github.
 
 Let us assume there are *N* items in the array. The included algorithms are:
 * **Selection sort** -- naïve algorithm where the smallest item in the array is placed in the first position, then the next smallest item is placed in the second position, and so on, until the whole array is sorted.
-  * Time complexity: *O*(*N*<sup>2</sup>) (uses ~*N*<sup>2</sup>/2 compares, performs *N* exchanges)
+  * Time complexity: *O*(*N*<sup>2</sup>) (performs ~*N*<sup>2</sup>/2 comparisons and *N* swaps)
   * Space complexity: *O*(1) auxiliary space
   * Not stable (meaning the order of equal values is not preserved)
+  * Not adaptive (meaning it does not perform better when data is nearly sorted)
+  
 * **Bubble sort** -- naïve algorithm where consecutive items are compared and swapped if they are in the wrong order; this process is repeated until no swap is performed for a whole pass.
   * Time complexity: *O*(*N*<sup>2</sup>) comparisons and swaps in the average and worst-case scenario; *O*(*N*) comparisons and *O*(1) swaps in the best-case scenario, i.e. when the array is already sorted
   * Space complexity: *O*(1) auxiliary space
   * Stable (meaning the order of equal values is preserved)
+  * Adaptive (meaning it performs better when the data is nearly sorted)
+  
+* **Insertion sort** -- naïve algorithm where an out-of-order item is inserted among the already sorted items; the process is repeated until the whole array is sorted. Insertion sort is what you would typically do to manually sort a deck of cards.
+  * Time complexity: *O*(*N*<sup>2</sup>) comparisons and swaps in the average and worst-case scenario; *O*(*N*) comparisons and *O*(1) swaps in the best-case scenario
+  * Space complexity: *O*(1) auxiliary space
+  * Stable
+  * Adaptive
 
 ## Compiling
 
@@ -49,7 +58,7 @@ Run the executable:
 
 ## TODO
 
-Add full suite of tests using cmocka (integer, strings, custom data structure) for the following cases and for every implemented algorithm, using the ascending and descending compare functions:
+Add full suite of tests using [cmocka](https://cmocka.org/) (integer, strings, custom data structure) for the following cases and for every implemented algorithm, using the ascending and descending compare functions:
 * random order
 * nearly sorted
 * reversed order

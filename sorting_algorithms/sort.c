@@ -37,25 +37,15 @@ bool less(size_t i, size_t j, void *array, size_t size, int (*compare)(const voi
 
 
 /*
- * Uses `compare` to determine whether the item at index `i` in `array` is greater than the item at
- * index `j`, where all array items have size `size`.
- */
-bool greater(size_t i, size_t j, void *array, size_t size,
-             int (*compare)(const void *, const void *))
-{
-    return compare((char *) array + i * size, (char *) array + j * size) > 0;
-}
-
-
-/*
  * Sorts the array `array` with `n_items` elements of size `size` using selection sort. Array
  * elements are sorted in ascending order according to a comparison function pointed to by
  * `compare`, which is called with two arguments that point to the objects being compared.
  *
- * Selection sort uses ~(n_items)^2 / 2 compares and `n_items` swaps to sort the array. Selection
+ * Selection sort uses ~(n_items^2) / 2 comparisons and `n_items` swaps to sort the array. Selection
  * sort uses no extra space.
  *
- * Selection sort is not stable, i.e. it does not preserve the order of equal items.
+ * Selection sort is not stable, i.e. it does not preserve the order of equal items. It is not
+ * adaptive, i.e. it does not perform better when the array is nearly sorted.
  */
 void selection_sort(void *array, size_t n_items, size_t size,
                     int (*compare)(const void *, const void *))
@@ -80,7 +70,8 @@ void selection_sort(void *array, size_t n_items, size_t size,
  * best case, the array is already sorted, in which case bubble sort performs `n_items` comparisons
  * and no swap. Bubble sort uses no extra space.
  *
- * Bubble sort is stable, i.e. it preserves the order of equal items.
+ * Bubble sort is stable, i.e. it preserves the order of equal items. It is adaptive, i.e. it
+ * performs better when the array is nearly sorted.
  */
 void bubble_sort(void *array, size_t n_items, size_t size,
                  int (*compare)(const void *, const void *))
@@ -90,11 +81,32 @@ void bubble_sort(void *array, size_t n_items, size_t size,
     do {
         swapped = false;
         for (size_t i = 0; i < n; i++) {
-            if (greater(i, i + 1, array, size, compare)) {
+            if (less(i + 1, i, array, size, compare)) {
                 swap(i, i + 1, array, size);
                 swapped = true;
             }
         }
         --n;
     } while (swapped);
+}
+
+
+/*
+ * Sorts the array `array` with `n_items` elements of size `size` using insertion sort. Array
+ * elements are sorted in ascending order according to a comparison function pointed to by
+ * `compare`, which is called with two arguments that point to the objects being compared.
+ *
+ * Insertion sort performs (n_items^2) / 4 comparisons and swaps on average, (n_items^2) / 2
+ * comparisons and swaps in the worst case, and n_items - 1 comparisons and 0 swaps in the best
+ * case. Insertion sort uses no extra space.
+ *
+ * Insertion sort is stable and adaptive.
+ */
+void insertion_sort(void *array, size_t n_items, size_t size,
+                    int (*compare)(const void *, const void *))
+{
+    for (size_t i = 1; i < n_items; i++)
+        for (size_t j = i; j > 0; j--)
+            if (less(j, j - 1, array, size, compare))
+                swap(j, j - 1, array, size);
 }
