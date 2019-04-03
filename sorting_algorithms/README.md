@@ -41,6 +41,13 @@ Let us assume there are *N* items in the array. The included algorithms are:
   * Space complexity: *O*(1) auxiliary space
   * Stable
   * Adaptive
+  * Lower overhead than bubble sort
+  
+* **Mergesort** -- divides the array in two halves, recursively sorts the two halves, then merges the resulting sub-arrays.
+  * Time complexity: *O*(*N* lg *N*)
+  * Space complexity: *O*(*N*) auxiliary space
+  * Stable
+  * Not adaptive
 
 ## Compiling
 
@@ -58,8 +65,11 @@ Run the executable:
 
 ## TODO
 
-Add full suite of tests using [cmocka](https://cmocka.org/) (integer, strings, custom data structure) for the following cases and for every implemented algorithm, using the ascending and descending compare functions:
-* random order
-* nearly sorted
-* reversed order
-* few unique values
+* Add full suite of tests using [cmocka](https://cmocka.org/) (integer, strings, custom data structure) for the following cases and for every implemented algorithm, using the ascending and descending compare functions:
+  * random order
+  * nearly sorted
+  * reversed order
+  * few unique values
+* Optimize mergesort:
+  * by using insertion sort on small sub-arrays
+  * by testing whether sub-arrays are already sorted

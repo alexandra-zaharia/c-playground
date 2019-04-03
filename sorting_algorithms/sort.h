@@ -13,5 +13,7 @@ void bubble_sort(void *array, size_t n_items, size_t size,
                  int (*compare)(const void *, const void *));
 void insertion_sort(void *array, size_t n_items, size_t size,
                    int (*compare)(const void *, const void *));
+void mergesort(void *array, size_t n_items, size_t size,
+               int (*compare)(const void *, const void *));
 
 #endif //C_PLAYGROUND_SORT_H
