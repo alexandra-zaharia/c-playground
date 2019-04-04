@@ -48,6 +48,12 @@ Let us assume there are *N* items in the array. The included algorithms are:
   * Space complexity: *O*(*N*) auxiliary space
   * Stable
   * Not adaptive
+  
+* **Quicksort** -- partitions the array into two sub-arrays by choosing an element called the *pivot*, such that items before the pivot are smaller than it and items after the pivot are greater than it. The sub-arrays are then sorted recursively using the same technique. 
+  * Time complexity: *O*(*N* lg *N*) compares and swaps on average; *O*(*N*<sup>2</sup>) in the worst case (when the pivot is always the first or the last item)
+  * Space complexity: *O*(1) auxiliary space
+  * Not stable 
+  * Not adaptive
 
 ## Compiling
 
@@ -73,3 +79,7 @@ Run the executable:
 * Optimize mergesort:
   * by using insertion sort on small sub-arrays
   * by testing whether sub-arrays are already sorted
+* Optimize quicksort:
+  * by using insertion sort on small sub-arrays
+  * by randomly shuffling items such that sub-arrays contain randomly ordered items, which prevents the worst-case scenario in which the pivot would always be the first or the last element in a sub-array
+  * by using three-way partitioning, in which the array is divided into three sub-arrays, with items smaller, equal to, and greater than the partitioning element.  

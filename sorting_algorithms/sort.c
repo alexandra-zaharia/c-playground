@@ -28,6 +28,7 @@ void _swap(void *a, void *b, size_t size)
 // Swaps items at indexes `i` and `j` in the array `array`, where each item has size `size`.
 void swap(size_t i, size_t j, void *array, size_t size)
 {
+    if (i == j) return;
     _swap((char *) array + i * size, (char *) array + j * size, size);
 }
 
@@ -146,10 +147,10 @@ void _merge(void *array, size_t size, int (*compare)(const void *, const void *)
 }
 
 /*
- * Helper function for performing top-down mergesort on the array `array` with `n_items` elements,
- * where each element has size `size`. Items are compared using the provided `compare` function.
- * The lowest index in the array on which mergesort is performed is `lo`, and the highest is `hi`.
- * The auxiliary array `aux` is used for merging two sorted sub-arrays.
+ * Helper function for performing top-down mergesort on the array `array`, where each element in the
+ * array has size `size`. Items are compared using the provided `compare` function. The lowest index
+ * in the array on which mergesort is performed is `lo`, and the highest is `hi`. The auxiliary
+ * array `aux` is used for merging the two sorted sub-arrays.
  */
 void _mergesort(void *array, size_t size,
                int (*compare)(const void *, const void *),
@@ -186,4 +187,65 @@ void mergesort(void *array, size_t n_items, size_t size,
     _mergesort(array, size, compare, 0, n_items - 1, aux);
 
     free(aux);
+}
+
+
+/*
+ * Partitions the array `array` where each element has size `size` between indexes `lo` and `hi`
+ * by choosing a pivoting element such that every item between `lo` and the pivot are less than the
+ * pivot, and every item between the element after pivot and `hi` are greater than the pivot. Items
+ * are compared using the provided `compare` function. Returns the index of the pivoting element.
+ */
+size_t _partition(void *array, size_t size, int (*compare)(const void *, const void *),
+                  size_t lo, size_t hi)
+{
+
+    size_t i = lo;
+    size_t j = hi + 1;
+
+    while (1) {
+        while (less(++i, lo, array, size, compare))
+            if (i == hi) break;
+        while (less(lo, --j, array, size, compare))
+            if (j == lo) break;
+
+        if (i >= j) break;
+        swap(i, j, array, size);
+    }
+
+    swap(lo, j, array, size);
+
+    return j;
+}
+
+
+/*
+ * Helper function for performing quicksort on the array `array`, where each element in the array
+ * has size `size`. Items are compared using the provided `compare` function. Quicksort is performed
+ * on the subarray of `array` from index `lo` to index `hi`.
+ */
+void _quicksort(void *array, size_t size, int (*compare)(const void *, const void *),
+                size_t lo, size_t hi)
+{
+    if (hi <= lo) return;
+    size_t pivot = _partition(array, size, compare, lo, hi);
+    if (pivot > 0) _quicksort(array, size, compare, lo, pivot - 1);
+    if (pivot < hi) _quicksort(array, size, compare, pivot + 1, hi);
+}
+
+
+/*
+ * Sorts the array `array` with `n_items` elements of size `size` using quicksort. Array elements
+ * are sorted in ascending order according to a comparison function pointed to by `compare`, which
+ * is called with two arguments that point to the objects being compared.
+ *
+ * Quicksort performs n_items * lg(n_items) comparisons on average. Its worst-case performance is
+ * O(n_items^2).
+ *
+ * Quicksort is not stable and non adaptive.
+ */
+void quicksort(void *array, size_t n_items, size_t size,
+               int (*compare)(const void *, const void *))
+{
+    _quicksort(array, size, compare, 0, n_items - 1);
 }
