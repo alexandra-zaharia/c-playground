@@ -190,7 +190,7 @@ int flip_bit_to_win(int number)
 
     if (seq_counter == 0) return 1;
     if (seq_counter == 1) return seq_lengths[0] > 0 ? seq_lengths[1] + 1 : seq_lengths[1];
-    if (seq_counter == 2) return seq_lengths[2] > 0 ? seq_lengths[1] + 1 : seq_lengths[1];
+    if (seq_counter == 2) return seq_lengths[1] + 1;
 
     int max_len = 0;
 
