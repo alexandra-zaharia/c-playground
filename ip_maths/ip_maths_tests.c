@@ -55,6 +55,7 @@ static void test_ipv4_format_2()
     assert_string_equal(ip_addr, "10.1.23.10");
 }
 
+
 static void test_network_id_1()
 {
     char network_id[16];
