@@ -8,9 +8,9 @@ Note that the functions do not perform sanity checks on their arguments (i.e., i
 
 
 ## Included functions
-It currently contains functions allowing to achieve the following objectives:
+The IP maths collection currently contains functions allowing to achieve the following objectives:
 
-* Obtaining the broadcast address for a given IPv4 and subnet mask
+* Obtaining the broadcast address for a given IPv4 address and subnet mask
 * Computing the integer equivalent of a 32-bit IPv4 address
 * Obtaining the 32-bit IPv4 address corresponding to an integer
 * Obtaining the network ID for a given IPv4 address and subnet mask
