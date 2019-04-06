@@ -38,7 +38,7 @@ unsigned int get_ip_integer_equivalent(char *ip_addr)
  */
 void get_ipv4_format(unsigned int ip_addr, char *output_buffer)
 {
-    sprintf(output_buffer, "%d.%d.%d.%d",
+    sprintf(output_buffer, "%hhu.%hhu.%hhu.%hhu",
             (ip_addr & 0xFF000000) >> 24,
             (ip_addr & 0x00FF0000) >> 16,
             (ip_addr & 0x0000FF00) >> 8,
