@@ -351,6 +351,13 @@ static void test_power_of_two_false()
 }
 
 
+static void test_flip_bit_to_win_615()
+{
+    // 615: 100110*0111*
+    assert_int_equal(flip_bit_to_win(615), 4);
+}
+
+
 static void test_flip_bit_to_win_1775()
 {
     // 1775: 110*11101111*
@@ -550,6 +557,7 @@ int run_tests_power_of_two()
 int run_tests_flip_bit_to_win()
 {
     const struct CMUnitTest tests_flip_bit_to_win[] = {
+            cmocka_unit_test(test_flip_bit_to_win_615),
             cmocka_unit_test(test_flip_bit_to_win_1775),
             cmocka_unit_test(test_flip_bit_to_win_1774),
             cmocka_unit_test(test_flip_bit_to_win_9967),

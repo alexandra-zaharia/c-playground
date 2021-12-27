@@ -171,35 +171,37 @@ bool is_power_of_two(int number)
  */
 int flip_bit_to_win(int number)
 {
-    int seq_lengths[CHAR_BIT * sizeof(int)];  // will store lengths of sequences of 0s and 1s
-    int seq_counter = 0;                      // number of sequences in `seq_lengths` + 1
-    int current_value = 0;                    // current bit value (0 or 1)
+    int seq_lengths[CHAR_BIT * sizeof(int)][2];  // will store lengths of sequences of 0s and 1s
+    int seq_counter = 0;                         // number of sequences in `seq_lengths` + 1
+    int current_value = number & 1;              // current bit value (0 or 1)
 
     for (size_t i = 0; i < CHAR_BIT * sizeof(int); i++)   // all sequence lengths are initially 0
-        seq_lengths[i] = 0;
+        seq_lengths[i][0] = seq_lengths[i][1] = 0;
+    seq_lengths[0][0] = current_value;
 
     for (size_t i = 0; i < CHAR_BIT * sizeof(int); i++) {
         if ((number & 1) == current_value) {  // still in the same sequence as before
-           seq_lengths[seq_counter]++;
+           seq_lengths[seq_counter][1]++;
         } else {                              // reading a different sequence than before
-            seq_lengths[++seq_counter] = 1;
+            seq_lengths[++seq_counter][1] = 1;
             current_value = number & 1;
+            seq_lengths[seq_counter][0] = current_value;
         }
         number >>= 1;                         // move on to the next bit
     }
 
-    if (seq_counter == 0) return 1;
-    if (seq_counter == 1) return seq_lengths[0] > 0 ? seq_lengths[1] + 1 : seq_lengths[1];
-    if (seq_counter == 2) return seq_lengths[1] + 1;
+    ++seq_counter;
 
     int max_len = 0;
 
-    for (int i = 1; i < seq_counter - 1; i += 2) {
-        int current_max = seq_lengths[i + 1] == 1         // if there is one 0 between two sequences
-                ? seq_lengths[i] + 1 + seq_lengths[i + 2] // of ones, we can flip the 0 bit
-                : MAX(seq_lengths[i], seq_lengths[i + 2]) + 1; // longest sequence of 1s + 1
-        if (max_len < current_max)
-            max_len = current_max;
+    for (int i = 0; i < seq_counter; ++i) {
+        int curr_max = seq_lengths[i][0] == 0 ? 1 : seq_lengths[i][1];
+        if (i < seq_counter - 1)
+            curr_max += seq_lengths[i][0] == 1 ? 1 : seq_lengths[i + 1][1];
+        if (seq_lengths[i][0] == 1 && seq_lengths[i + 1][1] == 1 && i < seq_counter - 2)
+            curr_max += seq_lengths[i + 2][1];
+        if (max_len < curr_max)
+            max_len = curr_max;
     }
 
     return max_len;
